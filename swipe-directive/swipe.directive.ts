@@ -1,28 +1,28 @@
 /**
  * Directive should be added to HTML element that swipe action is listened on.
- * Callback function should be attached to host event 'onSwipeMove' or'onSwipeEnd' event depending on required functionality.
+ * Callback function should be attached to host event 'swipeMove' or'swipeEnd' event depending on required functionality.
  * Event object contains two properties:
- * [direction]: 'vertical' | 'horizontal'  - defines swipe direction is vertical or horizontal
+ * [direction]: 'y' | 'x'  - defines swipe direction is vertical or horizontal
  * [distance]: number - defines swipe length in pixels
  */
 import { Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { SwipeCoordinates, SwipeEvent } from './interfaces';
+import { fromEvent, Observable } from 'rxjs';
+import { elementAt, filter, map, switchMap, take, takeUntil, takeWhile, tap } from 'rxjs/operators';
+import { SwipeCoordinates, SwipeDirection, SwipeEvent } from './interfaces';
 
 @Directive({
-  selector: '[stylistSwipe]'
+  selector: '[appSwipe]'
 })
 
 export class SwipeDirective implements OnInit, OnDestroy {
 
-  @Output() onSwipeMove: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
-  @Output() onSwipeEnd: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
+  @Output() swipeMove: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
+  @Output() swipeEnd: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
 
   /**
    * Property used to unsubscribe from all subscriptions on destroy event
-   * @type {boolean}
    */
-  private alive: boolean = true;
+  private alive = true;
 
   constructor(
     private elementRef: ElementRef,
@@ -30,107 +30,74 @@ export class SwipeDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
-    let domElement = this.elementRef.nativeElement;
-
-    let touchStarts: Observable<any>;
-    let touchMoves: Observable<any>;
-    let touchEnds: Observable<any>;
-
-    /** Run event listeners outside zone for better performance */
-    this.zone.runOutsideAngular(() => {
-      touchStarts = Observable.fromEvent(domElement, 'touchstart').map(this.touchEventToCoordinate);
-      touchMoves = Observable.fromEvent(domElement, 'touchmove').map(this.touchEventToCoordinate);
-      touchEnds = Observable.fromEvent(domElement, 'touchend').map(this.touchEventToCoordinate);
-    });
-
+    const domElement = this.elementRef.nativeElement;
+    
+    const touchStarts: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchstart').pipe(map(this.touchEventToCoordinate));
+    const touchMoves: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchmove').pipe(map(this.touchEventToCoordinate));
+    const touchEnds: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchend').pipe(map(this.touchEventToCoordinate));
+    
     /**
      * Move starts with direction: Pair the move start events with the 3rd subsequent move event,
-     * but only if no end event happens in between
+     * but only if no touch end event happens in between
      */
-    let moveStartsWithDirection = touchStarts.concatMap((dragStartEvent: SwipeCoordinates) =>
-      touchMoves
-        .takeUntil(touchEnds)
-        .elementAt(3)
-        .catch(err => Observable.empty())
-        .map((dragEvent: SwipeCoordinates) => {
+    const moveStartsWithDirection = touchStarts.pipe(
+      switchMap((dragStartEvent: SwipeCoordinates) => touchMoves.pipe(
+        elementAt(3),
+        map((dragEvent: SwipeCoordinates) => {
           const intialDeltaX = dragEvent.x - dragStartEvent.x;
           const initialDeltaY = dragEvent.y - dragStartEvent.y;
           return {x: dragStartEvent.x, y: dragStartEvent.y, intialDeltaX, initialDeltaY};
         })
-    );
+    )));
 
     /**
      * Vertical move starts: Keep only those move start events
      * where the 3rd subsequent move event is rather vertical than horizontal
      */
-    let verticalMoveStarts = moveStartsWithDirection.filter(dragStartEvent =>
-      Math.abs(dragStartEvent.intialDeltaX) < Math.abs(dragStartEvent.initialDeltaY)
-    );
+    const verticalMoveStarts = moveStartsWithDirection.pipe(
+      filter(dragStartEvent => Math.abs(dragStartEvent.intialDeltaX) < Math.abs(dragStartEvent.initialDeltaY)
+    ));
 
     /**
      * Horizontal move starts: Keep only those move start events
      * where the 3rd subsequent move event is rather horizontal than vertical
      */
-    let horizontalMoveStarts = moveStartsWithDirection.filter(dragStartEvent =>
-      Math.abs(dragStartEvent.intialDeltaX) >= Math.abs(dragStartEvent.initialDeltaY)
+    const horizontalMoveStarts = moveStartsWithDirection.pipe(
+      filter(dragStartEvent => Math.abs(dragStartEvent.intialDeltaX) >= Math.abs(dragStartEvent.initialDeltaY))
     );
 
     /**
-     * Take the moves until an end occurs
-     * @param dragStartEvent
+     * Take the moves until touch ends
+     * On move end emit swipe end event to parent element
      */
-    const movesUntilEnds = (dragStartEvent: any) =>
-      touchMoves.takeUntil(touchEnds).map(dragEvent => {
-        const x = dragEvent.x - dragStartEvent.x;
-        const y = dragEvent.y - dragStartEvent.y;
-        return {x, y};
-      });
+    const movesUntilEnds = (dragStartEvent: any, direction: SwipeDirection) => touchMoves.pipe(
+      map(dragEvent => this.getSwipeDistance(dragStartEvent, dragEvent)),
+      takeUntil(touchEnds.pipe(
+        take(1),
+        map(dragEndEvent => this.getSwipeDistance(dragStartEvent, dragEndEvent)),
+        tap((coordinates: SwipeCoordinates) => this.emitSwipeEndEvent(direction, coordinates))
+    )));
 
-    let verticalMoves = verticalMoveStarts.concatMap(movesUntilEnds);
-    let horizontalMoves = horizontalMoveStarts.concatMap(movesUntilEnds);
-
+    const verticalMoves = verticalMoveStarts.pipe(
+      switchMap(dragStartEvent => movesUntilEnds(dragStartEvent, 'y'))
+    );
+    const horizontalMoves = horizontalMoveStarts.pipe(
+      switchMap(dragStartEvent => movesUntilEnds(dragStartEvent, 'x'))
+    );
+    
     /**
-     * Last move event that ends swipe
-     * @param dragStartEvent
+     * Run swipe subscriptions outside zone for better performance
+     * On move emit swipe move event to parent element
      */
-    const lastMovesAtEnds = (dragStartEvent: any) =>
-      touchEnds.first().map(dragEndEvent => {
-        const x = dragEndEvent.x - dragStartEvent.x;
-        const y = dragEndEvent.y - dragStartEvent.y;
-        return {x, y};
-      });
-
-    let verticalMoveEnds = verticalMoveStarts.concatMap(lastMovesAtEnds);
-    let horizontalMoveEnds = horizontalMoveStarts.concatMap(lastMovesAtEnds);
-
-    /**
-     * Subscribe to swipe events
-     * When swipe move or swipe end happens - emit corresponding events to parent element
-     */
-    verticalMoves
-      .takeWhile(() => this.alive)
-      .subscribe((coordinates: SwipeCoordinates) => {
-        this.emitSwipeMoveEvent('vertical', coordinates.y);
-      });
-
-    horizontalMoves
-      .takeWhile(() => this.alive)
-      .subscribe((coordinates: SwipeCoordinates) => {
-        this.emitSwipeMoveEvent('horizontal', coordinates.x);
-      });
-
-    verticalMoveEnds
-      .takeWhile(() => this.alive)
-      .subscribe((coordinates: SwipeCoordinates) => {
-        this.emitSwipeEndEvent('vertical', coordinates.y);
-      });
-
-    horizontalMoveEnds
-      .takeWhile(() => this.alive)
-      .subscribe((coordinates: SwipeCoordinates) => {
-        this.emitSwipeEndEvent('horizontal', coordinates.x);
-      });
+    this.zone.runOutsideAngular(() => {
+      verticalMoves.pipe(
+        takeWhile(() => this.alive)
+      ).subscribe((coordinates: SwipeCoordinates) => this.emitSwipeMoveEvent('y', coordinates));
+  
+      horizontalMoves.pipe(
+        takeWhile(() => this.alive)
+      ).subscribe((coordinates: SwipeCoordinates) => this.emitSwipeMoveEvent('x', coordinates));
+    });
   }
 
   /**
@@ -142,8 +109,6 @@ export class SwipeDirective implements OnInit, OnDestroy {
 
   /**
    * Format touch event to coordinates object that is easier to read
-   * @param touchEvent
-   * @returns {{x: number, y: number}}
    */
   public touchEventToCoordinate(touchEvent: TouchEvent): SwipeCoordinates  {
     return {
@@ -151,19 +116,25 @@ export class SwipeDirective implements OnInit, OnDestroy {
       y: touchEvent.changedTouches[0].clientY
     };
   }
-
-  /**
-   * Emits swipe move event with calculated direction and distance
-   */
-  private emitSwipeMoveEvent(direction: string, distance: number) {
-    this.onSwipeMove.emit({direction, distance});
+  
+  private getSwipeDistance(dragStartEvent, dragEvent): SwipeCoordinates {
+    return {
+      x: dragEvent.x - dragStartEvent.x,
+      y: dragEvent.y - dragStartEvent.y
+    };
   }
 
   /**
    * Emits swipe move event with calculated direction and distance
    */
-  private emitSwipeEndEvent(direction: string, distance: number) {
-    this.onSwipeEnd.emit({direction, distance});
+  private emitSwipeMoveEvent(direction: SwipeDirection, coordinates: SwipeCoordinates) {
+    this.swipeMove.emit({direction, distance: coordinates[direction]});
   }
 
+  /**
+   * Emits swipe move event with calculated direction and distance
+   */
+  private emitSwipeEndEvent(direction: SwipeDirection, coordinates: SwipeCoordinates) {
+    this.swipeEnd.emit({direction, distance: coordinates[direction]});
+  }
 }

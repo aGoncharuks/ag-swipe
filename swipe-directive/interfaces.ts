@@ -3,7 +3,9 @@ export interface SwipeCoordinates {
   y: number;
 }
 
+export type SwipeDirection = 'y' | 'x';
+
 export interface SwipeEvent {
-  direction: string;
+  direction: SwipeDirection;
   distance: number;
 }
