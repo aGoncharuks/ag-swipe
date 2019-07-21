@@ -1,5 +1,5 @@
 /*
- * Public API Surface of angular-swipe
+ * Public API Surface of ng-swipe
  */
 
 export * from './lib/swipe.module';

@@ -20,11 +20,11 @@
       "dom"
     ],
     "paths": {
-      "angular-swipe": [
-        "dist/angular-swipe"
+      "ng-swipe": [
+        "dist/ng-swipe"
       ],
-      "angular-swipe/*": [
-        "dist/angular-swipe/*"
+      "ng-swipe/*": [
+        "dist/ng-swipe/*"
       ]
     }
   }

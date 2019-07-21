@@ -3,33 +3,33 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-swipe": {
+    "ng-swipe": {
       "projectType": "library",
-      "root": "projects/angular-swipe",
-      "sourceRoot": "projects/angular-swipe/src",
+      "root": "projects/ng-swipe",
+      "sourceRoot": "projects/ng-swipe/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/angular-swipe/tsconfig.lib.json",
-            "project": "projects/angular-swipe/ng-package.json"
+            "tsConfig": "projects/ng-swipe/tsconfig.lib.json",
+            "project": "projects/ng-swipe/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/angular-swipe/src/test.ts",
-            "tsConfig": "projects/angular-swipe/tsconfig.spec.json",
-            "karmaConfig": "projects/angular-swipe/karma.conf.js"
+            "main": "projects/ng-swipe/src/test.ts",
+            "tsConfig": "projects/ng-swipe/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-swipe/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/angular-swipe/tsconfig.lib.json",
-              "projects/angular-swipe/tsconfig.spec.json"
+              "projects/ng-swipe/tsconfig.lib.json",
+              "projects/ng-swipe/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -109,5 +109,5 @@
         }
       }
     }},
-  "defaultProject": "angular-swipe"
+  "defaultProject": "ng-swipe"
 }

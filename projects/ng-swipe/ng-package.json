@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/angular-swipe",
+  "dest": "../../dist/ng-swipe",
   "lib": {
     "entryFile": "src/public-api.ts"
   }
