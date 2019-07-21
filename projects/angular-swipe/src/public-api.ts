@@ -3,4 +3,4 @@
  */
 
 export * from './lib/swipe.module';
-export * from './lib/typings';
+export * from './lib/interfaces';

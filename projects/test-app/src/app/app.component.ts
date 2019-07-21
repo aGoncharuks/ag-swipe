@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SwipeEvent } from '../../../angular-swipe/src/lib/typings';
+import { SwipeEvent } from '../../../angular-swipe/src/lib/interfaces';
 
 @Component({
   selector: 'app-root',

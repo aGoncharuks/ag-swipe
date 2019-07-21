@@ -8,7 +8,7 @@
 import { Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 import { elementAt, filter, map, switchMap, take, takeUntil, takeWhile, tap } from 'rxjs/operators';
-import { SwipeCoordinates, SwipeDirection, SwipeEvent } from './typings';
+import { SwipeCoordinates, SwipeDirection, SwipeEvent } from './interfaces';
 
 @Directive({
   selector: '[ngSwipe]'
