@@ -18,6 +18,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-swipe": [
+        "dist/angular-swipe"
+      ],
+      "angular-swipe/*": [
+        "dist/angular-swipe/*"
+      ]
+    }
   }
 }
