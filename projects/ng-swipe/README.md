@@ -1,24 +1,49 @@
-# AngularSwipe
+# Angular Swipe
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+## Installation
 
-## Code scaffolding
+```
+npm install ng-swipe --save
+```
 
-Run `ng generate component component-name --project ng-swipe` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-swipe`.
-> Note: Don't forget to add `--project ng-swipe` or else it will be added to the default project in your `angular.json` file. 
+## Usage
 
-## Build
+Import SwipeModule to your module:
 
-Run `ng build ng-swipe` to build the project. The build artifacts will be stored in the `dist/` directory.
+```typescript
+import { SwipeModule } from 'ng-swipe';
 
-## Publishing
+@NgModule({
+  imports: [
+    SwipeModule
+  ],
+})
+```
 
-After building your library with `ng build ng-swipe`, go to the dist folder `cd dist/ng-swipe` and run `npm publish`.
+Add `ngSwipe` directive to your DOM element and listen to `swipeMove` or `swipeEnd` events that are emitted when 
+swipe happens on this element.
 
-## Running unit tests
+```typescript
+import { SwipeEvent } from 'ng-swipe';
 
-Run `ng test ng-swipe` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@Component({
+  selector: 'app',
+  template: `
+    <div 
+      ngSwipe 
+      (swipeMove)="onSwipeMove($event)" 
+      (swipeMove)="onSwipeEnd($event)"
+    >My test element for swipe</div>
+  `
+})
+export class AppComponent {
+  onSwipeMove(event: SwipeEvent) {
+    console.log(`swipe direction: ${event.direction}`);
+    console.log(`swipe distance: ${event.distance}`);
+  }
+  onSwipeEnd(event: SwipeEvent) {
+    console.log(`swipe direction: ${event.direction}`);
+    console.log(`swipe distance: ${event.distance}`);
+  }  
+}
+```
