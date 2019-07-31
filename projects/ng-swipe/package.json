@@ -1,6 +1,10 @@
 {
   "name": "ng-swipe",
   "version": "1.0.0",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/aGoncharuks/angular-swipe-directive.git"
+  },
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3"
