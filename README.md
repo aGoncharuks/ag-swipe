@@ -1,5 +1,7 @@
 # Angular Swipe
 
+A lightweight Angular directive to detect swipes on touchscreen devices.
+
 ## Installation
 
 ```
