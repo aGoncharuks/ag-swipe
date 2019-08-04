@@ -8,7 +8,7 @@ npm install ng-swipe --save
 
 ## Usage
 
-Import SwipeModule to your module:
+Import ``SwipeModule`` to your module:
 
 ```typescript
 import { SwipeModule } from 'ng-swipe';
@@ -20,8 +20,11 @@ import { SwipeModule } from 'ng-swipe';
 })
 ```
 
-Add `ngSwipe` directive to your DOM element and listen to `swipeMove` or `swipeEnd` events that are emitted when 
-swipe happens on this element.
+Add ``ngSwipe`` directive to your DOM element and listen to ``swipeMove`` or ``swipeEnd`` events that are emitted when 
+swipe happens on this element.<br/>
+Both events correspond to ``SwipeEvent`` interface, which contains two fields:<br/>
+``direction: 'y' | 'x'``  - defines swipe direction<br/>
+``distance: number`` - defines swipe length in pixels
 
 ```typescript
 import { SwipeEvent } from 'ng-swipe';
@@ -47,3 +50,9 @@ export class AppComponent {
   }  
 }
 ```
+
+## Swipe direction
+All four swipe directions(right, left, up, down) can be easily detected by filtering events by events ``direction`` and 
+``distance`` 
+fields in 
+consumer component e.g. right swipe will have ``direction === 'x'`` and ``distance > 0``.
