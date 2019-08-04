@@ -6,6 +6,7 @@
     "url" : "https://github.com/aGoncharuks/angular-swipe-directive.git"
   },
   "license": "MIT",
+  "keywords": ["swipe", "gesture", "angular", "ng", "directive"],
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3"
