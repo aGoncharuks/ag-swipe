@@ -5,6 +5,7 @@
     "type" : "git",
     "url" : "https://github.com/aGoncharuks/angular-swipe-directive.git"
   },
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3"
