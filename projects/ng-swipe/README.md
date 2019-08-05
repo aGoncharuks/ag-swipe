@@ -37,7 +37,7 @@ import { SwipeEvent } from 'ng-swipe';
     <div 
       ngSwipe 
       (swipeMove)="onSwipeMove($event)" 
-      (swipeMove)="onSwipeEnd($event)"
+      (swipeEnd)="onSwipeEnd($event)"
     >My test element for swipe</div>
   `
 })
@@ -54,7 +54,7 @@ export class AppComponent {
 ```
 
 ## Swipe direction
-All four swipe directions(right, left, up, down) can be easily detected by filtering events by events ``direction`` and 
+All four swipe directions(right, left, up, down) can be easily detected by filtering events by ``direction`` and 
 ``distance`` 
 fields in 
 consumer component e.g. right swipe will have ``direction === 'x'`` and ``distance > 0``.
