@@ -2,8 +2,8 @@
   "name": "ng-swipe",
   "version": "1.0.5",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/aGoncharuks/angular-swipe-directive.git"
+    "type": "git",
+    "url": "https://github.com/aGoncharuks/angular-swipe-directive.git"
   },
   "license": "MIT",
   "keywords": [
@@ -14,10 +14,11 @@
     "directive"
   ],
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "rxjs": "^7.5.5"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0"
   }
 }
