@@ -1,85 +1,84 @@
 /**
  * Format touch event to coordinates object that is easier to read
  */
-import { fromEvent, merge, Observable, Subscription } from 'rxjs';
-import { elementAt, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { SwipeCoordinates, SwipeDirection, SwipeListenerConfig } from './interfaces';
+import { catchError, EMPTY, fromEvent, Observable, race, Subscription } from 'rxjs';
+import { elementAt, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { SwipeCoordinates, SwipeCoordinatesWithDirection, SwipeDirection, SwipeEvent, SwipeSubscriptionConfig } from './interfaces';
 
 
-export function initializeSwipeListener({ domElement, onSwipeMove, onSwipeEnd }: SwipeListenerConfig): Subscription {
-  const touchStarts: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchstart').pipe(map(touchEventToCoordinate));
-  const touchMoves: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchmove').pipe(map(touchEventToCoordinate));
-  const touchEnds: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchend').pipe(map(touchEventToCoordinate));
+export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscriptionConfig): Subscription {
+  if (!(domElement instanceof HTMLElement)) {
+    throw new Error('Provided domElement should be instance of HTMLElement');
+  }
 
-  /**
-   * Move starts with direction: Pair the move start events with the 3rd subsequent move event,
-   * but only if no touch end event happens in between
-   */
-  const moveStartsWithDirection = touchStarts.pipe(
-    switchMap((dragStartEvent: SwipeCoordinates) => touchMoves.pipe(
+  if ((typeof onSwipeMove !== 'function') && (typeof onSwipeEnd !== 'function')) {
+    throw new Error('At least one of the following swipe event handler functions should be provided: onSwipeMove and/or onSwipeEnd');
+  }
+
+  const touchStarts$: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchstart').pipe(map(getTouchCoordinates));
+  const touchMoves$: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchmove').pipe(map(getTouchCoordinates));
+  const touchEnds$: Observable<SwipeCoordinates> = fromEvent(domElement, 'touchend').pipe(map(getTouchCoordinates));
+  const touchCancels$: Observable<Event> = fromEvent(domElement, 'touchcancel');
+
+  const touchStartsWithDirection$: Observable<SwipeCoordinatesWithDirection> = touchStarts$.pipe(
+    switchMap((touchStartEvent: SwipeCoordinates) => touchMoves$.pipe(
       elementAt(3),
-      map((dragEvent: SwipeCoordinates) => {
-        const intialDeltaX = dragEvent.x - dragStartEvent.x;
-        const initialDeltaY = dragEvent.y - dragStartEvent.y;
-        return {x: dragStartEvent.x, y: dragStartEvent.y, intialDeltaX, initialDeltaY};
-      })
-  )));
-
-  /**
-   * Vertical move starts: Keep only those move start events
-   * where the 3rd subsequent move event is rather vertical than horizontal
-   */
-  const verticalMoveStarts = moveStartsWithDirection.pipe(
-    filter(dragStartEvent => Math.abs(dragStartEvent.intialDeltaX) < Math.abs(dragStartEvent.initialDeltaY)
-  ));
-
-  /**
-   * Horizontal move starts: Keep only those move start events
-   * where the 3rd subsequent move event is rather horizontal than vertical
-   */
-  const horizontalMoveStarts = moveStartsWithDirection.pipe(
-    filter(dragStartEvent => Math.abs(dragStartEvent.intialDeltaX) >= Math.abs(dragStartEvent.initialDeltaY))
-  );
-
-  /**
-   * Take the moves until touch ends
-   * On move end emit swipe end event to parent element
-   */
-  const movesUntilEnds = (dragStartEvent: any, direction: SwipeDirection) => touchMoves.pipe(
-    map(dragEvent => getSwipeDistance(dragStartEvent, dragEvent)),
-    takeUntil(touchEnds.pipe(
-      take(1),
-      map(dragEndEvent => getSwipeDistance(dragStartEvent, dragEndEvent)),
-      tap((coordinates: SwipeCoordinates) => onSwipeEnd({ direction, distance: coordinates[direction] }))
-  )));
-
-  const verticalMoves = verticalMoveStarts.pipe(
-    switchMap(dragStartEvent => movesUntilEnds(dragStartEvent, 'y'))
-  );
-  const horizontalMoves = horizontalMoveStarts.pipe(
-    switchMap(dragStartEvent => movesUntilEnds(dragStartEvent, 'x'))
-  );
-
-  return merge(
-    verticalMoves.pipe(
-      tap((coordinates: SwipeCoordinates) => onSwipeMove({ direction: 'y', distance: coordinates.y }))
-    ),
-    horizontalMoves.pipe(
-      tap((coordinates: SwipeCoordinates) => onSwipeMove({ direction: 'x', distance: coordinates.x }))
+      map((touchMoveEvent: SwipeCoordinates) => ({
+          x: touchStartEvent.x,
+          y: touchStartEvent.y,
+          direction: getTouchDirection(touchStartEvent, touchMoveEvent)
+        })
+      ))
     )
+  );
+
+  return touchStartsWithDirection$.pipe(
+    switchMap(touchStartEvent => touchMoves$.pipe(
+      map(touchMoveEvent => getTouchDistance(touchStartEvent, touchMoveEvent)),
+      tap((coordinates: SwipeCoordinates) => {
+        if (typeof onSwipeMove !== 'function') { return; }
+        onSwipeMove(getSwipeEvent(touchStartEvent, coordinates));
+      }),
+      takeUntil(race(
+        touchEnds$.pipe(
+          map(touchEndEvent => getTouchDistance(touchStartEvent, touchEndEvent)),
+          tap((coordinates: SwipeCoordinates) => {
+            if (typeof onSwipeEnd !== 'function') { return; }
+            onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates));
+          })
+        ),
+        touchCancels$
+      ))
+    )),
+    catchError(error => {
+      console.error(error);
+      return EMPTY;
+    }),
   ).subscribe();
 }
 
-export function touchEventToCoordinate(touchEvent: TouchEvent): SwipeCoordinates  {
+function getTouchCoordinates(touchEvent: TouchEvent): SwipeCoordinates  {
   return {
     x: touchEvent.changedTouches[0].clientX,
     y: touchEvent.changedTouches[0].clientY
   };
 }
 
-export function getSwipeDistance(dragStartEvent, dragEvent): SwipeCoordinates {
+function getSwipeEvent(touchStartEvent, coordinates): SwipeEvent  {
   return {
-    x: dragEvent.x - dragStartEvent.x,
-    y: dragEvent.y - dragStartEvent.y
+    direction: touchStartEvent.direction,
+    distance: coordinates[touchStartEvent.direction]
   };
+}
+
+function getTouchDistance(touchStartEvent, touchEvent): SwipeCoordinates {
+  return {
+    x: touchEvent.x - touchStartEvent.x,
+    y: touchEvent.y - touchStartEvent.y
+  };
+}
+
+function getTouchDirection(touchStartEvent, touchEvent): SwipeDirection {
+  const { x, y } = getTouchDistance(touchStartEvent, touchEvent);
+  return Math.abs(x) < Math.abs(y) ? SwipeDirection.Y : SwipeDirection.X;
 }

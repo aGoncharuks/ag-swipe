@@ -3,15 +3,24 @@ export interface SwipeCoordinates {
   y: number;
 }
 
-export type SwipeDirection = 'y' | 'x';
+export enum SwipeDirection {
+  X = 'x',
+  Y = 'y'
+}
+
+export interface SwipeCoordinatesWithDirection {
+  x: number;
+  y: number;
+  direction: SwipeDirection;
+}
 
 export interface SwipeEvent {
   direction: SwipeDirection;
   distance: number;
 }
 
-export interface SwipeListenerConfig {
+export interface SwipeSubscriptionConfig {
   domElement: HTMLElement;
-  onSwipeMove: (event: SwipeEvent) => void;
-  onSwipeEnd: (event: SwipeEvent) => void;
+  onSwipeMove?: (event: SwipeEvent) => void;
+  onSwipeEnd?: (event: SwipeEvent) => void;
 }
