@@ -15,8 +15,7 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@angular-swipe-directive/swipe-core": ["libs/swipe-core/src/index.ts"],
-      "ng-swipe": ["dist/ng-swipe"],
-      "ng-swipe/*": ["dist/ng-swipe/*"]
+      "ng-swipe": ["libs/swipe-angular/src/index.ts"]
     },
     "rootDir": "."
   },
