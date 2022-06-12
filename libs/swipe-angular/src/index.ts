@@ -1,1 +1,1 @@
-export * from './lib/swipe-angular.module';
+export * from './lib/swipe.module';

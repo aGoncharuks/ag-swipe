@@ -8,7 +8,7 @@ export enum SwipeDirection {
   Y = 'y'
 }
 
-export interface SwipeCoordinatesWithDirection {
+export interface SwipeStartEvent {
   x: number;
   y: number;
   direction: SwipeDirection;

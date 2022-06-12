@@ -1,7 +1,7 @@
-import { swipeCore } from './swipe-core';
+import { createSwipeSubscription } from './swipe-core';
 
 describe('swipeCore', () => {
   it('should work', () => {
-    expect(swipeCore()).toEqual('swipe-core');
+    expect(createSwipeSubscription).toBeTruthy();
   });
 });

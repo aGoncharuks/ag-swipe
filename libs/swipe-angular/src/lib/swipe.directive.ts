@@ -7,15 +7,15 @@
  */
 import { Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SwipeEvent } from './interfaces';
-import { createSwipeSubscription } from './swipe.directive.plain';
+import { SwipeEvent } from '../../../swipe-core/src/lib/swipe-core.types';
+import { createSwipeSubscription } from '@swipe/swipe-core';
 
 @Directive({
   selector: '[ngSwipe]'
 })
 
 export class SwipeDirective implements OnInit, OnDestroy {
-  private swipeSubscription: Subscription;
+  private swipeSubscription: Subscription | undefined;
 
   @Output() swipeMove: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
   @Output() swipeEnd: EventEmitter<SwipeEvent> = new EventEmitter<SwipeEvent>();
@@ -36,6 +36,7 @@ export class SwipeDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!this.swipeSubscription) { return; }
     this.swipeSubscription.unsubscribe();
   }
 }

@@ -1,7 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "ng-swipe": "libs/ng-swipe",
     "swipe-angular": "libs/swipe-angular",
     "swipe-core": "libs/swipe-core",
     "test-app": "apps/test-app"
