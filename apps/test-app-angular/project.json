@@ -1,24 +1,23 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "generators": {},
-  "sourceRoot": "apps/test-app/src",
+  "sourceRoot": "apps/test-app-angular/src",
   "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/apps/test-app",
-        "index": "apps/test-app/src/index.html",
-        "main": "apps/test-app/src/main.ts",
-        "polyfills": "apps/test-app/src/polyfills.ts",
-        "tsConfig": "apps/test-app/tsconfig.app.json",
+        "outputPath": "dist/apps/test-app-angular",
+        "index": "apps/test-app-angular/src/index.html",
+        "main": "apps/test-app-angular/src/main.ts",
+        "polyfills": "apps/test-app-angular/src/polyfills.ts",
+        "tsConfig": "apps/test-app-angular/tsconfig.app.json",
         "assets": [
-          "apps/test-app/src/favicon.ico",
-          "apps/test-app/src/assets"
+          "apps/test-app-angular/src/favicon.ico",
+          "apps/test-app-angular/src/assets"
         ],
-        "styles": [
-          "apps/test-app/src/styles.css"
-        ],
+        "styles": ["apps/test-app-angular/src/styles.css"],
         "scripts": [],
         "vendorChunk": true,
         "extractLicenses": false,
@@ -31,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/test-app/src/environments/environment.ts",
-              "with": "apps/test-app/src/environments/environment.prod.ts"
+              "replace": "apps/test-app-angular/src/environments/environment.ts",
+              "with": "apps/test-app-angular/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -60,18 +59,18 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "test-app:build"
+        "browserTarget": "test-app-angular:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "test-app:build:production"
+          "browserTarget": "test-app-angular:build:production"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "test-app:build"
+        "browserTarget": "test-app-angular:build"
       }
     }
   }

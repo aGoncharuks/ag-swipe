@@ -5,14 +5,9 @@ import { SwipeModule } from '@swipe/swipe-angular';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    SwipeModule
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, SwipeModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
