@@ -39,6 +39,11 @@
     },
     "@nrwl/angular:component": {
       "style": "css"
+    },
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
     }
   }
 }

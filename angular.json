@@ -3,6 +3,7 @@
   "projects": {
     "swipe-angular": "libs/swipe-angular",
     "swipe-core": "libs/swipe-core",
+    "swipe-react": "libs/swipe-react",
     "test-app": "apps/test-app"
   }
 }

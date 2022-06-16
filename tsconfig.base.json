@@ -15,7 +15,8 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@swipe/swipe-angular": ["libs/swipe-angular/src/index.ts"],
-      "@swipe/swipe-core": ["libs/swipe-core/src/index.ts"]
+      "@swipe/swipe-core": ["libs/swipe-core/src/index.ts"],
+      "react-rx-swipe": ["libs/swipe-react/src/index.ts"]
     },
     "rootDir": "."
   },
