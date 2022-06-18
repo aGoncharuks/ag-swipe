@@ -1,14 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { useSwipe } from '@swipe/react-rx-swipe';
 
 export function App() {
-  return (
-    <>
-      <NxWelcome title="test-app-react" />
-      <div />
-    </>
-  );
+  const swipeElement = useSwipe({
+    onSwipeEnd: (event) => console.log(event)
+  });
+
+  return <div ref={swipeElement}>Swipe me!</div>
 }
 
 export default App;

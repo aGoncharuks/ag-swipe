@@ -8,7 +8,7 @@ import { SwipeCoordinates, SwipeStartEvent, SwipeDirection, SwipeEvent, SwipeSub
 
 export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscriptionConfig): Subscription {
   if (!(domElement instanceof HTMLElement)) {
-    throw new Error('Provided domElement should be instance of HTMLElement');
+    throw new Error('Provided domElement should be an instance of HTMLElement');
   }
 
   if ((typeof onSwipeMove !== 'function') && (typeof onSwipeEnd !== 'function')) {

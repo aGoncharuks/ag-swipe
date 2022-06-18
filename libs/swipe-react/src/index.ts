@@ -1,1 +1,1 @@
-export * from './lib/swipe-react';
+export * from './lib/use-swipe';
