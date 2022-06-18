@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/swipe-angular/src",
+  "prefix": "ng",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/swipe-angular"],
+      "options": {
+        "project": "libs/swipe-angular/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/swipe-angular/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/swipe-angular/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/swipe-angular"],
+      "options": {
+        "jestConfig": "libs/swipe-angular/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/swipe-angular/**/*.ts",
+          "libs/swipe-angular/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

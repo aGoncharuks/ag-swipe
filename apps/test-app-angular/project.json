@@ -1,0 +1,77 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/test-app-angular/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/test-app-angular",
+        "index": "apps/test-app-angular/src/index.html",
+        "main": "apps/test-app-angular/src/main.ts",
+        "polyfills": "apps/test-app-angular/src/polyfills.ts",
+        "tsConfig": "apps/test-app-angular/tsconfig.app.json",
+        "assets": [
+          "apps/test-app-angular/src/favicon.ico",
+          "apps/test-app-angular/src/assets"
+        ],
+        "styles": ["apps/test-app-angular/src/styles.css"],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/test-app-angular/src/environments/environment.ts",
+              "with": "apps/test-app-angular/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": ""
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "test-app-angular:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "test-app-angular:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "test-app-angular:build"
+      }
+    }
+  }
+}
