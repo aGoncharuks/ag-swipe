@@ -1,5 +1,5 @@
-import { SwipeEvent } from '@ag/swipe-core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SwipeEvent } from 'ng-swipe';
 
 @Component({
   selector: 'app-root',
