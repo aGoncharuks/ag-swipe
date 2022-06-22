@@ -55,6 +55,7 @@
     "@typescript-eslint/eslint-plugin": "~5.24.0",
     "@typescript-eslint/parser": "~5.24.0",
     "babel-jest": "27.5.1",
+    "babel-preset-minify": "^0.5.2",
     "codelyzer": "^6.0.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",

@@ -4,13 +4,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "project": "libs/swipe-core/package.json",
         "outputPath": "dist/libs/swipe-core",
-        "main": "libs/swipe-core/src/index.ts",
+        "entryFile": "libs/swipe-core/src/index.ts",
         "tsConfig": "libs/swipe-core/tsconfig.lib.json",
-        "assets": ["libs/swipe-core/*.md"]
+        "format": ["esm"]
       }
     },
     "lint": {
