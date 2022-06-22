@@ -1,4 +1,4 @@
-import { useSwipe } from '@swipe/react-rx-swipe';
+import { useSwipe } from '@ag/swipe-react';
 
 export function App() {
   const swipeElement = useSwipe({

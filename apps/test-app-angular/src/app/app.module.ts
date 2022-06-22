@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { SwipeModule } from '@swipe/swipe-angular';
+import { SwipeModule } from '@ag/swipe-angular';
 
 import { AppComponent } from './app.component';
 
