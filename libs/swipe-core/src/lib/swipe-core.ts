@@ -1,9 +1,6 @@
-/**
- * Format touch event to coordinates object that is easier to read
- */
-import { catchError, EMPTY, fromEvent, Observable, race, Subscription } from 'rxjs';
+import { fromEvent, Observable, race, Subscription } from 'rxjs';
 import { elementAt, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { SwipeCoordinates, SwipeStartEvent, SwipeDirection, SwipeEvent, SwipeSubscriptionConfig } from './swipe-core.types';
+import { SwipeCoordinates, SwipeDirection, SwipeEvent, SwipeStartEvent, SwipeSubscriptionConfig } from './swipe-core.types';
 
 
 export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscriptionConfig): Subscription {
@@ -49,11 +46,7 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
         ),
         touchCancels$
       ))
-    )),
-    catchError(error => {
-      console.error(error);
-      return EMPTY;
-    }),
+    ))
   ).subscribe();
 }
 
