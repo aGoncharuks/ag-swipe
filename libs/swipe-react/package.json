@@ -1,4 +1,7 @@
 {
   "name": "@ag/swipe-react",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "peerDependencies": {
+    "react": "^18.1.0"
+  }
 }
