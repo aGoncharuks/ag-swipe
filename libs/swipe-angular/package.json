@@ -1,6 +1,15 @@
 {
   "name": "ng-swipe",
   "version": "2.0.0",
+  "description": "An Angular directive wrapper for a lightweight library to detect swipes on touchscreen devices.",
+  "keywords": ["swipe", "gesture", "touch", "angular", "directive"],
+  "homepage": "https://github.com/aGoncharuks/ag-swipe",
+  "license": "ISC",
+  "author": {
+    "email": "aleksandrs.goncaruks@gmail.com",
+    "name": "Alexander Goncharuk",
+    "url": "https://github.com/aGoncharuks"
+  },
   "peerDependencies": {
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0"
