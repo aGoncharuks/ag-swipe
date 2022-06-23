@@ -9,5 +9,8 @@
     "email": "aleksandrs.goncaruks@gmail.com",
     "name": "Alexander Goncharuk",
     "url": "https://github.com/aGoncharuks"
+  },
+  "dependencies": {
+    "rxjs": "^7.5.5"
   }
 }

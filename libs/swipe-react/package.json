@@ -12,5 +12,8 @@
   },
   "peerDependencies": {
     "react": "^18.1.0"
+  },
+  "dependencies": {
+    "@ag/swipe-core": "^1.0.0"
   }
 }
