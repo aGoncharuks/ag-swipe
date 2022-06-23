@@ -1,5 +1,5 @@
 {
-  "name": "@ag/swipe-react",
+  "name": "ag-swipe-react",
   "version": "1.0.0",
   "description": "A React hook wrapper for a lightweight library to detect swipes on touchscreen devices.",
   "keywords": ["swipe", "gesture", "touch", "react", "hook"],
@@ -14,6 +14,6 @@
     "react": "^18.1.0"
   },
   "dependencies": {
-    "@ag/swipe-core": "^1.0.0"
+    "ag-swipe-core": "^1.0.0"
   }
 }

@@ -1,13 +1,13 @@
 ## Installation
 
 ```
-npm install @ag/swipe-react --save
+npm install ag-swipe-react --save
 ```
 
 ## Usage
 
 ```tsx
-import { SwipeEvent, useSwipe } from '@ag/swipe-react';
+import { SwipeEvent, useSwipe } from 'ag-swipe-react';
 
 export function App() {
   const swipeElement = useSwipe({

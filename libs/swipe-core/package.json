@@ -1,5 +1,5 @@
 {
-  "name": "@ag/swipe-core",
+  "name": "ag-swipe-core",
   "version": "1.0.0",
   "description": "A lightweight library to detect swipes on touchscreen devices.",
   "keywords": ["swipe", "gesture", "touch", "touchscreen", "library"],

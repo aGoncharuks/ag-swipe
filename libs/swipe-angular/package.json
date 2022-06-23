@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@ag/swipe-core": "^1.0.0"
+    "ag-swipe-core": "^1.0.0"
   }
 }

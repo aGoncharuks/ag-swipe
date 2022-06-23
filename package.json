@@ -1,5 +1,5 @@
 {
-  "name": "@ag/swipe",
+  "name": "ag-swipe",
   "version": "0.0.0",
   "scripts": {
     "ng": "nx",

@@ -1,4 +1,4 @@
-import { createSwipeSubscription, SwipeSubscriptionConfig } from '@ag/swipe-core';
+import { createSwipeSubscription, SwipeSubscriptionConfig } from 'ag-swipe-core';
 import { RefCallback, useCallback } from 'react';
 import { Subscription } from 'rxjs';
 

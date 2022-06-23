@@ -1,13 +1,13 @@
 ## Installation
 
 ```
-npm install @ag/swipe-core --save
+npm install ag-swipe-core --save
 ```
 
 ## Usage
 
 ```typescript
-import { createSwipeSubscription, SwipeEvent } from '@ag/swipe-core';
+import { createSwipeSubscription, SwipeEvent } from 'ag-swipe-core';
 
 const domElement: HTMLElement = document.querySelector('#swipe-element');
 

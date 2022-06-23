@@ -1,4 +1,4 @@
-# @ag/swipe
+# ag-swipe
 
 The library exposes a single function ``createSwipeSubscription`` that attaches ``swipeEnd`` and/or ``swipeMove``event 
 listeners to the provided DOM element and calls the event handler function when a revelant event occurs.

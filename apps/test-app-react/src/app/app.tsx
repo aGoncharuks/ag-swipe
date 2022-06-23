@@ -1,4 +1,4 @@
-import { SwipeEvent, useSwipe } from '@ag/swipe-react';
+import { SwipeEvent, useSwipe } from 'ag-swipe-react';
 
 export function App() {
   const swipeElement = useSwipe({

@@ -5,6 +5,6 @@
     "entryFile": "src/index.ts"
   },
   "allowedNonPeerDependencies": [
-    "@ag/swipe-core"
+    "ag-swipe-core"
   ]
 }
