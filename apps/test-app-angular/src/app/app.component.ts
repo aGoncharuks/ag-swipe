@@ -9,6 +9,6 @@ import { SwipeEvent } from 'ng-swipe';
 })
 export class AppComponent {
   onSwipeEnd(event: SwipeEvent) {
-    console.log(event);
+    console.log(`SwipeEnd direction: ${event.direction} and distance: ${event.distance}`);
   }
 }

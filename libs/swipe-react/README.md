@@ -1,7 +1,24 @@
-# swipe-react
+## Installation
 
-This library was generated with [Nx](https://nx.dev).
+```
+npm install @ag/swipe-react --save
+```
 
-## Running unit tests
+## Usage
 
-Run `nx test swipe-react` to execute the unit tests via [Jest](https://jestjs.io).
+```tsx
+import { SwipeEvent, useSwipe } from '@ag/swipe-react';
+
+export function App() {
+  const swipeElement = useSwipe({
+    onSwipeMove: (event: SwipeEvent) => {
+      console.log(`SwipeMove direction: ${event.direction} and distance: ${event.distance}`);
+    },
+    onSwipeEnd: (event: SwipeEvent) => {
+      console.log(`SwipeEnd direction: ${event.direction} and distance: ${event.distance}`);
+    }
+  });
+
+  return <div ref={swipeElement}>Swipe me!</div>
+}
+```

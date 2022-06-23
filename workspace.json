@@ -5,6 +5,7 @@
     "swipe-core": "libs/swipe-core",
     "swipe-react": "libs/swipe-react",
     "test-app-angular": "apps/test-app-angular",
+    "test-app-core": "apps/test-app-core",
     "test-app-react": "apps/test-app-react"
   }
 }

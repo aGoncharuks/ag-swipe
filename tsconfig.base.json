@@ -14,9 +14,9 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "ng-swipe": ["dist/libs/swipe-angular"],
       "@ag/swipe-core": ["dist/libs/swipe-core"],
-      "@ag/swipe-react": ["dist/libs/swipe-react"]
+      "@ag/swipe-react": ["dist/libs/swipe-react"],
+      "ng-swipe": ["dist/libs/swipe-angular"]
     },
     "rootDir": "."
   },
