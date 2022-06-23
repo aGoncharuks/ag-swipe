@@ -11,7 +11,9 @@
         "outputPath": "dist/libs/swipe-core",
         "entryFile": "libs/swipe-core/src/index.ts",
         "tsConfig": "libs/swipe-core/tsconfig.lib.json",
-        "format": ["esm"]
+        "format": ["esm"],
+        "assets": ["libs/swipe-core/src/README.md"]
+
       }
     },
     "lint": {

@@ -13,8 +13,10 @@ contains two fields:
 - ``distance: number`` - defines swipe length in pixels
 
 
-All four swipe directions (right, left, up, down) can be detected by filtering events by ``direction`` and 
-``distance`` fields e.g. to detect the right swipe:
+All four swipe directions (`right`, `left`, `up`, `down`) can be detected by filtering events by ``direction`` and 
+``distance`` fields. 
+
+For example, to detect the `right` swipe check if the foolowing conditions are `true`:
 
 ``direction === 'x' && distance > 0``
 
@@ -22,11 +24,11 @@ All four swipe directions (right, left, up, down) can be detected by filtering e
 
 ##Wrappers for frameworks
 
-There are three npm packages to choose from. Pick the one that fits your project best:
+There are three `npm` packages to choose from. Pick the one that fits your project best:
 
 ### Plain Javascript/Typescript
 
-[Installation and usage](libs/swipe-core/README.md)
+[Installation and usage](libs/swipe-core/src/README.md)
 
 ### Angular directive
 

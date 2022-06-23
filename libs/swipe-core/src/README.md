@@ -18,3 +18,12 @@ createSwipeSubscription({
   },
 });
 ```
+
+## Unsubscribing 
+When swipe events should no longer be tracked:
+
+```typescript
+if (typeof swipeSubscription?.unsubscribe === 'function') {
+  swipeSubscription.unsubscribe();
+}
+```
