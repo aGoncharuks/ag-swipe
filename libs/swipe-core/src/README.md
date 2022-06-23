@@ -11,7 +11,7 @@ import { createSwipeSubscription, SwipeEvent } from 'ag-swipe-core';
 
 const domElement: HTMLElement = document.querySelector('#swipe-element');
 
-createSwipeSubscription({
+const swipeSubscription = createSwipeSubscription({
   domElement,
   onSwipeEnd: (event: SwipeEvent) => {
     console.log(`SwipeEnd direction: ${event.direction} and distance: ${event.distance}`);
@@ -23,7 +23,7 @@ createSwipeSubscription({
 When swipe events should no longer be tracked:
 
 ```typescript
-if (typeof swipeSubscription?.unsubscribe === 'function') {
+if (swipeSubscription) {
   swipeSubscription.unsubscribe();
 }
 ```
