@@ -10,6 +10,4 @@ const swipeSubscription = createSwipeSubscription({
 });
 
 // When swipe events should no longer be tracked:
-// if (typeof swipeSubscription?.unsubscribe === 'function') {
-//  swipeSubscription.unsubscribe();
-// }
+//  swipeSubscription?.unsubscribe?.();
