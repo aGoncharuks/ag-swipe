@@ -1,5 +1,16 @@
 {
-  "name": "@swipe/swipe-core",
-  "version": "0.0.1",
-  "type": "commonjs"
+  "name": "ag-swipe-core",
+  "version": "1.0.1",
+  "description": "A lightweight library to detect swipes on touchscreen devices.",
+  "keywords": ["swipe", "gesture", "touch", "touchscreen", "library"],
+  "homepage": "https://github.com/aGoncharuks/ag-swipe",
+  "license": "ISC",
+  "author": {
+    "email": "aleksandrs.goncaruks@gmail.com",
+    "name": "Alexander Goncharuk",
+    "url": "https://github.com/aGoncharuks"
+  },
+  "dependencies": {
+    "rxjs": "^7.5.5"
+  }
 }

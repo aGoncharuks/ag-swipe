@@ -1,5 +1,5 @@
-import { SwipeEvent } from '@swipe/swipe-core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SwipeEvent } from 'ng-swipe';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AppComponent {
   onSwipeEnd(event: SwipeEvent) {
-    console.log(event);
+    console.log(`SwipeEnd direction: ${event.direction} and distance: ${event.distance}`);
   }
 }

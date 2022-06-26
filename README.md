@@ -1,60 +1,49 @@
-# Angular Swipe
+# ag-swipe
 
-A lightweight Angular directive to detect swipes on touchscreen devices.
+The library exposes a single function ``createSwipeSubscription`` that attaches ``swipeEnd`` and/or ``swipeMove``event 
+listeners to the provided DOM element and calls the event handler function when a revelant event occurs.
 
-## Installation
-
-```
-npm install ng-swipe --save
-```
-
-## Usage
-
-Import ``SwipeModule`` to your module:
-
+The function expects the following configuration object to be passed as an argument:
 ```typescript
-import { SwipeModule } from 'ng-swipe';
-
-@NgModule({
-  imports: [
-    SwipeModule
-  ],
-})
-```
-
-Add ``ngSwipe`` directive to your DOM element and listen to ``swipeMove`` or ``swipeEnd`` events that are emitted when 
-swipe happens on this element.<br/>
-Both events correspond to ``SwipeEvent`` interface, which contains two fields:<br/>
-``direction: 'y' | 'x'``  - defines swipe direction<br/>
-``distance: number`` - defines swipe length in pixels
-
-```typescript
-import { SwipeEvent } from 'ng-swipe';
-
-@Component({
-  selector: 'app',
-  template: `
-    <div 
-      ngSwipe 
-      (swipeMove)="onSwipeMove($event)" 
-      (swipeEnd)="onSwipeEnd($event)"
-    >My test element for swipe</div>
-  `
-})
-export class AppComponent {
-  onSwipeMove(event: SwipeEvent) {
-    console.log(`swipe direction: ${event.direction}`);
-    console.log(`swipe distance: ${event.distance}`);
-  }
-  onSwipeEnd(event: SwipeEvent) {
-    console.log(`swipe direction: ${event.direction}`);
-    console.log(`swipe distance: ${event.distance}`);
-  }  
+interface SwipeSubscriptionConfig {
+  domElement: HTMLElement;
+  onSwipeMove?: (event: SwipeEvent) => void;
+  onSwipeEnd?: (event: SwipeEvent) => void;
 }
 ```
 
-## Swipe direction
-All four swipe directions(right, left, up, down) can be easily detected by filtering events by ``direction`` and 
-``distance`` 
-fields in 
-consumer component e.g. right swipe will have ``direction === 'x'`` and ``distance > 0``.
+At least one of ``swipeEnd`` or ``swipeMove`` event handlers should be provided, but not necessarily both. 
+
+Both ``swipeEnd`` and ``swipeMove`` listeners will emit an object implementing the ``SwipeEvent`` interface, which 
+contains two fields:
+
+- ``direction: 'y' | 'x'``  - defines swipe direction
+- ``distance: number`` - defines swipe length in pixels
+
+
+All four swipe directions (`right`, `left`, `up`, `down`) can be detected by filtering events by ``direction`` and 
+``distance`` fields. 
+
+For example, to detect the `right` swipe check if the following conditions are `true`:
+
+```
+direction === 'x' && distance > 0
+```
+
+
+##Wrappers for frameworks
+
+There are three `npm` packages to choose from. Pick the one that fits your project best:
+
+### Plain Javascript/Typescript
+
+[Installation and usage](libs/swipe-core/src/README.md)
+
+### Angular directive
+
+[Installation and usage](libs/swipe-angular/README.md)
+
+### React hook
+
+[Installation and usage](libs/swipe-react/README.md)
+
