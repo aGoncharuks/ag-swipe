@@ -1,3 +1,5 @@
+For more details on the public interface of the library please see the [Github page](https://github.com/aGoncharuks/ag-swipe).
+
 ## Installation
 
 ```

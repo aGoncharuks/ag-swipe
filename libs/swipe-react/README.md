@@ -1,3 +1,7 @@
+This library is a React hook wrapper around the vanilla JS swipe detection library `ag-swipe-core`.
+
+For more details on the public interface of the library please see the [Github page](https://github.com/aGoncharuks/ag-swipe).
+
 ## Installation
 
 ```
