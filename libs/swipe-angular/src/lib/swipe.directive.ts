@@ -27,7 +27,6 @@ export class SwipeDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!this.swipeSubscription) { return; }
-    this.swipeSubscription.unsubscribe();
+    this.swipeSubscription?.unsubscribe?.();
   }
 }
