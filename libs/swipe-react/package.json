@@ -1,8 +1,14 @@
 {
   "name": "ag-swipe-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React hook wrapper for a lightweight library to detect swipes on touchscreen devices.",
-  "keywords": ["swipe", "gesture", "touch", "react", "hook"],
+  "keywords": [
+    "swipe",
+    "gesture",
+    "touch",
+    "react",
+    "hook"
+  ],
   "homepage": "https://github.com/aGoncharuks/ag-swipe",
   "license": "ISC",
   "author": {
