@@ -30,7 +30,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.0.0",
+    "@angular-devkit/build-angular": "^15.0.0",
     "@angular-eslint/eslint-plugin": "~13.2.1",
     "@angular-eslint/eslint-plugin-template": "~13.2.1",
     "@angular-eslint/template-parser": "~13.2.1",
@@ -41,8 +41,8 @@
     "@nrwl/jest": "14.2.4",
     "@nrwl/js": "^14.2.4",
     "@nrwl/linter": "14.2.4",
-    "@nrwl/react": "^14.3.5",
-    "@nrwl/web": "14.3.5",
+    "@nrwl/react": "^14.8.6",
+    "@nrwl/web": "14.8.6",
     "@nrwl/workspace": "14.2.4",
     "@swc/core": "^1.2.173",
     "@testing-library/react": "13.3.0",
